@@ -1,0 +1,59 @@
+  {% extends 'shop/main.html' %}
+  {% load static %}
+  {% block content %}
+
+    <div class="w3-padding-64 w3-small w3-center">
+      <h4><strong>Quick view</strong></h4>
+      <div class="w3-row-padding">
+              <div class="w3-col s4">
+                <h6> Items: <strong>{{order.total_products_in_order}}</strong></h6>
+              </div>
+              <div class="w3-col s4">
+              <h6> Total: <strong>€{{order.get_total_price}}</strong></h6>
+              </div>
+              <div class="w3-col s4">
+              <a style="float:right; margin:10px" class="w3-button w3-block w3-black" href="{% url 'checkout' %}">checkout</a>
+              </div>
+      </div>
+
+      <br>
+      <br>
+
+      <h4><strong>Invoice</strong></h4>
+      <div class="w3-row">
+        <div class="w3-col l3 s6">
+          <h6>Item</h6>
+        </div>
+        <div class="w3-col l3 s6">
+          <h6>Price</h6>
+        </div>
+        <div class="w3-col l3 s6">
+          <h6>Amount</h6>
+        </div>
+        <div class="w3-col l3 s6">
+          <h6>Total</h6>
+        </div>
+      </div>
+
+      {% for orderedproduct in orderedproducts %}
+      <div class="w3-row">
+        <div class="w3-col l3 s6">
+          <h7>{{orderedproduct.product.name}}</h7>
+        </div>
+        <div class="w3-col l3 s6">
+          <h7>€{{orderedproduct.product.price}}</h7>
+        </div>
+        <div class="w3-col l3 s6">
+          <h7>{{orderedproduct.quantity}} </h7>
+          <i class="fa fa-solid fa-plus update-cart" data-action="add" data-product="{{orderedproduct.product.id}}" style="color: #39db61;"></i>
+          <i class="fa fa-solid fa-minus update-cart" data-action="decrease" data-product="{{orderedproduct.product.id}}" style="color: #ff2e2e;"></i>
+        </div>
+        <div class="w3-col l3 s6">
+          <h7>€{{orderedproduct.get_total}}</h7>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+
+ {% endblock content %}
